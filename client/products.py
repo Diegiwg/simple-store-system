@@ -25,8 +25,11 @@ async def products(client: Client):
             {
                 "defaultColDef": table.default_col_def(),
                 "columnDefs": [
+                    {"headerName": "ID", "field": "id", "filter": False, "width": 30},
                     {"headerName": "Nome", "field": "name"},
-                    {"headerName": "Marca", "field": "brand"},
+                    {"headerName": "Marca", "field": "brand", "width": 100},
+                    {"headerName": "Referencia", "field": "reference", "width": 100},
+                    {"headerName": "Preço", "field": "price", "width": 100},
                 ],
                 "defaultColGroupDef": {
                     "marryChildren": True,
