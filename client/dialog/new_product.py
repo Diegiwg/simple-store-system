@@ -1,6 +1,7 @@
 from nicegui import ui
 
 import components
+import javascript
 
 
 class FormData:
@@ -12,9 +13,19 @@ class FormData:
 
 
 form_data = FormData()
+dialog_instance = None
+products_table_instance = None
+
+
+async def load_data_from_api():
+    data = await javascript.fetch_api("products")
+    products_table_instance.options["rowData"] = data
+    products_table_instance.update()
 
 
 async def new_product_handler():
+    global form_data, dialog_instance
+
     if (
         form_data.name == ""
         or form_data.brand == ""
@@ -24,14 +35,23 @@ async def new_product_handler():
         ui.notify(message="Informações do Produto estão incompletas!", type="negative")
         return
 
-    ui.notify(message=f"Product {form_data.name} added")
+    await javascript.fetch_api(
+        f"products/create/{form_data.name}/{form_data.brand}/{form_data.reference}/{form_data.price}"
+    )
+    await load_data_from_api()
+    form_data = FormData()
+    ui.notify("Produto cadastrado com sucesso!", type="positive")
+    dialog_instance.close()
 
 
-def new_product():
+def new_product(products_table: ui.table):
+    global dialog_instance, products_table_instance
     with ui.dialog() as dl, ui.card().style(
         add="width: 100%; display: flex; flex-direction: column; align-items: stretch;"
     ):
 
+        dialog_instance = dl
+        products_table_instance = products_table
         components.page_title("Novo Produto")
 
         ui.input(label="Nome do Produto").bind_value(

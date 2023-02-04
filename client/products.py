@@ -37,13 +37,16 @@ async def products(client: Client):
                 "rowSelection": "single",
                 "rowData": [],
             }
-        )
+        ).style(add="height: 74vh;")
         client.on_connect(load_data_from_api)  # load data and update table
 
         with ui.row().style(
             add="width: 100%; display: flex; justify-content: space-between;"
         ):
-            ui.button("Cadastrar Produto", on_click=lambda: dialog.new_product().open())
+            ui.button(
+                "Cadastrar Produto",
+                on_click=lambda: dialog.new_product(products_table).open(),
+            )
             with ui.row():
                 ui.button("Editar").style(add="width: 8rem;")
                 ui.button("Remover").style(add="width: 8rem;")

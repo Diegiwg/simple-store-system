@@ -2,7 +2,7 @@ import random
 
 from nicegui import app
 
-from data import Product, Stock
+from data import Product, new_product, Stock
 
 
 @app.get("/api/random/{max}")
@@ -28,3 +28,9 @@ def get_stock():
         )
 
     return data
+
+
+@app.get("/api/products/create/{name}/{brand}/{reference}/{price}")
+def create_product(name: str, brand: str, reference: str, price: float):
+    product = new_product(name, brand, reference, price)
+    return product.__data__

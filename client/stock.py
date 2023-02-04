@@ -45,7 +45,7 @@ async def stock(client: Client):
                 "rowSelection": "single",
                 "rowData": [],
             },
-        )
+        ).style(add="height: 74vh;")
         client.on_connect(load_data_from_api)  # load data and update table
 
         with ui.row().style(
