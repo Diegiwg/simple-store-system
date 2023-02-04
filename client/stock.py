@@ -1,9 +1,8 @@
 from nicegui import ui, Client
-from client.global_layout import globalLayout
-from javascript.fetch_api import fetch_api
-from javascript.table import defaultColDef, get_selected_row
-
-from style.page_title import ui_page_title
+from client import layout
+from javascript import fetch_api
+from javascript import table
+import components
 
 stock_table: ui.table
 
@@ -15,7 +14,7 @@ async def load_data_from_api():
 
 
 async def check_marked_item():
-    selected_row: list = await get_selected_row(stock_table.id)
+    selected_row: list = await table.get_selected_row(stock_table.id)
     if len(selected_row) == 0:
         ui.notify("Nehum Produto selecionado!", type="negative")
 
@@ -25,14 +24,14 @@ async def check_marked_item():
 @ui.page(path="/client/stock", title="Estoque")
 async def stock(client: Client):
     global stock_table
-    globalLayout()
+    layout.render()
 
     with ui.card().style(add="width: 100%; height: 95vh;"):
-        ui_page_title("Estoque")
+        components.page_title("Estoque")
 
         stock_table = ui.table(
             options={
-                "defaultColDef": defaultColDef(),
+                "defaultColDef": table.default_col_def(),
                 "columnDefs": [
                     {
                         "headerName": "ID",

@@ -1,9 +1,9 @@
 from nicegui import ui, Client
-from client.dialog import new_product
-from client.global_layout import globalLayout
-from javascript.fetch_api import fetch_api
-from javascript.table import defaultColDef
-from style.page_title import ui_page_title
+from client import dialog
+from client import layout
+import components
+from javascript import fetch_api
+from javascript import table
 
 products_table: ui.table
 
@@ -17,13 +17,14 @@ async def load_data_from_api():
 @ui.page(path="/client/products", title="Produtos")
 async def products(client: Client):
     global products_table
-    globalLayout()
+    layout.render()
+
     with ui.card().style(add="width: 100%; height: 95vh;"):
-        ui_page_title("Produtos")
+        components.page_title("Produtos")
 
         products_table = ui.table(
             {
-                "defaultColDef": defaultColDef(),
+                "defaultColDef": table.default_col_def(),
                 "columnDefs": [
                     {"headerName": "Nome", "field": "name"},
                     {"headerName": "Marca", "field": "brand"},
@@ -40,7 +41,7 @@ async def products(client: Client):
         with ui.row().style(
             add="width: 100%; display: flex; justify-content: space-between;"
         ):
-            ui.button("Cadastrar Produto", on_click=lambda: new_product.dialog().open())
+            ui.button("Cadastrar Produto", on_click=lambda: dialog.new_product().open())
             with ui.row():
                 ui.button("Editar").style(add="width: 8rem;")
                 ui.button("Remover").style(add="width: 8rem;")

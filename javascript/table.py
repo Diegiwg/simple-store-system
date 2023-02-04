@@ -2,7 +2,7 @@ import json
 from nicegui.ui import run_javascript
 
 
-def defaultColDef():
+def default_col_def():
     return {
         "sortable": True,
         "filter": True,

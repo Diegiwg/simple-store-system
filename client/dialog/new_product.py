@@ -1,6 +1,5 @@
 from nicegui import ui
-from client.global_layout import globalLayout
-from style.page_title import ui_page_title
+import components
 
 
 class FormData:
@@ -27,12 +26,12 @@ async def new_product_handler():
     ui.notify(message=f"Product {form_data.name} added")
 
 
-def dialog():
+def new_product():
     with ui.dialog() as dl, ui.card().style(
         add="width: 100%; display: flex; flex-direction: column; align-items: stretch;"
     ):
 
-        ui_page_title("Novo Produto")
+        components.page_title("Novo Produto")
 
         ui.input(label="Nome do Produto").bind_value(
             target_object=form_data, target_name="name"

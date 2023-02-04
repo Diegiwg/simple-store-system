@@ -1,6 +1,6 @@
 import random
 from nicegui import app
-from data.models import Product, Stock
+from data import Product, Stock
 
 
 @app.get("/api/random/{max}")
