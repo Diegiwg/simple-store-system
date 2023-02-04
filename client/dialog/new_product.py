@@ -1,4 +1,5 @@
 from nicegui import ui
+
 import components
 
 

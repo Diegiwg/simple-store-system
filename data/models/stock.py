@@ -1,4 +1,4 @@
-from data import BaseModel, Product, ForeignKeyField, IntegerField
+from data import BaseModel, ForeignKeyField, IntegerField, Product
 
 
 class Stock(BaseModel):

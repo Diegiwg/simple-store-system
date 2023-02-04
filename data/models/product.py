@@ -1,4 +1,4 @@
-from data import BaseModel, CharField, IntegerField, FloatField
+from data import BaseModel, CharField, FloatField
 
 
 class Product(BaseModel):

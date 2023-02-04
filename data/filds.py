@@ -1,7 +1,1 @@
-from peewee import (
-    CharField,
-    FloatField,
-    IntegerField,
-    DateTimeField,
-    ForeignKeyField,
-)
+from peewee import CharField, DateTimeField, FloatField, ForeignKeyField, IntegerField

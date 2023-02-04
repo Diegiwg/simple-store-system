@@ -1,8 +1,8 @@
-from nicegui import ui, Client
-from client import layout
-from javascript import fetch_api
-from javascript import table
+from nicegui import Client, ui
+
 import components
+from client import layout
+from javascript import fetch_api, table
 
 stock_table: ui.table
 

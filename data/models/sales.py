@@ -1,5 +1,6 @@
-from data import BaseModel, Product, DateTimeField, ForeignKeyField
 from datetime import datetime
+
+from data import BaseModel, DateTimeField, ForeignKeyField, Product
 
 
 class Sales(BaseModel):

@@ -1,9 +1,8 @@
-from nicegui import ui, Client
-from client import dialog
-from client import layout
+from nicegui import Client, ui
+
 import components
-from javascript import fetch_api
-from javascript import table
+from client import dialog, layout
+from javascript import fetch_api, table
 
 products_table: ui.table
 

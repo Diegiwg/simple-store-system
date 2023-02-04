@@ -1,5 +1,7 @@
 import random
+
 from nicegui import app
+
 from data import Product, Stock
 
 

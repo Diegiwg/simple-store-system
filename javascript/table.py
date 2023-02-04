@@ -1,4 +1,5 @@
 import json
+
 from nicegui.ui import run_javascript
 
 

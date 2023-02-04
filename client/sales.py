@@ -1,8 +1,9 @@
 import json
+
 from nicegui import ui
 
-from client import layout
 import components
+from client import layout
 from javascript import fetch_api
 
 

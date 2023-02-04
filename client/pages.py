@@ -1,1 +1,1 @@
-from client import sales, products, stock
+from client import products, sales, stock

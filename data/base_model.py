@@ -1,4 +1,5 @@
 from peewee import Model
+
 from data import database_instance
 
 
