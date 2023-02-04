@@ -24,7 +24,7 @@ async def check_marked_item():
 @ui.page(path="/client/stock", title="Estoque")
 async def stock(client: Client):
     global stock_table
-    layout.render()
+    client.on_connect(layout.render)
 
     with ui.card().style(add="width: 100%; height: 95vh;"):
         components.page_title("Estoque")

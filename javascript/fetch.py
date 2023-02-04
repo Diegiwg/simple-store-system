@@ -4,8 +4,7 @@ from nicegui.ui import run_javascript
 async def fetch(path: str):
     javascript_code = f"""
         const req = await fetch('{path}');
-        const res = await req.json();
-        console.log(res);
+        const res = await req.text();
         return res
     """
 

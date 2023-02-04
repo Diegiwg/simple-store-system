@@ -16,7 +16,7 @@ async def load_data_from_api():
 @ui.page(path="/client/products", title="Produtos")
 async def products(client: Client):
     global products_table
-    layout.render()
+    client.on_connect(layout.render)
 
     with ui.card().style(add="width: 100%; height: 95vh;"):
         components.page_title("Produtos")
