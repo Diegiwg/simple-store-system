@@ -1,7 +1,7 @@
 from nicegui import app, ui
 
-import api.routes  # Inicializar todas as rotas da API
-import client.pages  # Inicializar todas as páginas do Cliente
+import api.routes as routes
+import client.pages as pages
 
 app.add_static_files("/static", "static")
 ui.run(dark=True)

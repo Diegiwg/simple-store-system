@@ -1,0 +1,29 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "python.analysis.autoSearchPaths": true,
+        "python.formatting.provider": "black",
+        "black-formatter.args": [
+            "--max-line-length=80",
+        ],
+        "python.linting.enabled": true,
+        "python.linting.pylamaEnabled": true,
+        "vsintellicode.python.completionsEnabled": true
+    },
+    "extensions": {
+        "recommendations": [
+            "ms-python.python",
+            "ms-python.vscode-pylance",
+            "ms-python.black-formatter",
+            "ms-python.isort",
+            "EditorConfig.EditorConfig",
+            "VisualStudioExptTeam.vscodeintellicode",
+            "christian-kohler.path-intellisense",
+            "twixes.pypi-assistant"
+        ]
+    }
+}

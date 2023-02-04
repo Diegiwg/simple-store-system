@@ -13,6 +13,6 @@ def default_col_def():
 
 async def get_selected_row(table_id):
     data = await run_javascript(
-        f"const id = (getElement({table_id}).gridOptions.api.getSelectedRows()); console.log('id', id); return JSON.stringify(id);"
+        f"return JSON.stringify(getElement({table_id}).gridOptions.api.getSelectedRows());"
     )
     return json.loads(data)

@@ -8,10 +8,9 @@ def menu_button(text: str, path: str):
 def render():
     ui.add_head_html(
         """
-    <style>
-        
-    </style>
-    """
+        <style>
+        </style>
+        """
     )
 
     with ui.left_drawer():
