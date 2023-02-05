@@ -1,14 +1,15 @@
 from nicegui import Client, ui
 
+import api
 import components
 from client import layout
-from javascript import fetch_api, table
+from javascript import table
 
 stock_table: ui.table
 
 
-async def load_data_from_api():
-    data = await fetch_api("stock")
+def load_data_from_api():
+    data = api.stock.get_stock_list()
     stock_table.options["rowData"] = data
     stock_table.update()
 

@@ -1,4 +1,4 @@
-from nicegui import Client, ui
+from nicegui import ui
 
 from components import clock
 

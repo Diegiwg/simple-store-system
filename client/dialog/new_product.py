@@ -1,7 +1,7 @@
 from nicegui import ui
 
+import api
 import components
-import javascript
 
 
 class FormData:
@@ -13,12 +13,12 @@ class FormData:
 
 
 form_data = FormData()
-dialog_instance = None
-products_table_instance = None
+dialog_instance: ui.dialog
+products_table_instance: ui.table
 
 
-async def load_data_from_api():
-    data = await javascript.fetch_api("products")
+def load_data_from_api():
+    data = api.products.get_products()
     products_table_instance.options["rowData"] = data
     products_table_instance.update()
 
@@ -35,11 +35,13 @@ async def new_product_handler():
         ui.notify(message="Informações do Produto estão incompletas!", type="negative")
         return
 
-    await javascript.fetch_api(
-        f"products/create/{form_data.name}/{form_data.brand}/{form_data.reference}/{form_data.price}"
+    api.products.new_product(
+        form_data.name, form_data.brand, form_data.reference, form_data.price
     )
-    await load_data_from_api()
+    load_data_from_api()
+
     form_data = FormData()
+
     ui.notify("Produto cadastrado com sucesso!", type="positive")
     dialog_instance.close()
 

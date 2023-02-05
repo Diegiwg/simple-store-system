@@ -4,7 +4,7 @@ import javascript
 
 
 async def js_clock():
-    source = await javascript.fetch("/static/code/clock.js")
+    source = await javascript.fetch("/static/code/clock.js") or ""
     await ui.run_javascript(code=source, respond=False)
 
 

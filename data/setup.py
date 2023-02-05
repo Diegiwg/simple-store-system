@@ -1,8 +1,7 @@
-from instance import db
-from models import Product, Stock
+from data import database_instance, Product, Stock
 
-db.connect()
+database_instance.connect()
 
-db.create_tables([Product, Stock])
+database_instance.create_tables([Product, Stock])
 
-db.close()
+database_instance.close()
