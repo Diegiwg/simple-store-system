@@ -8,9 +8,10 @@ class StockInfo:
         self.quantity = quantity
 
 
-def new_stock(product: Product, quantity: int) -> Stock | Exception:
+def new(product_id: int, quantity: int) -> Stock | Exception:
     try:
-        stock = Stock.create(product=product, quantity=quantity)
+        product = Product.get_by_id(product_id)
+        stock = Stock.get_or_create(product=product.id, quantity=quantity)
         stock.save()
         return stock
     except Exception as e:
@@ -18,7 +19,14 @@ def new_stock(product: Product, quantity: int) -> Stock | Exception:
         return e
 
 
-def get_stock_list() -> list[StockInfo]:
+def delete(stock_id: int) -> None:
+    try:
+        Stock.delete_by_id(stock_id)
+    except Exception as e:
+        print(e)
+
+
+def get_all() -> list[StockInfo]:
     data = []
     for item in Stock.select(
         Product.id, Product.name, Stock.quantity  # type: ignore

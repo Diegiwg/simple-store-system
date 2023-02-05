@@ -1,9 +1,7 @@
 from data import Product
 
 
-def new_product(
-    name: str, brand: str, reference: str, price: float
-) -> Product | Exception:
+def new(name: str, brand: str, reference: str, price: float) -> Product | Exception:
     try:
         product = Product.create(
             name=name, brand=brand, reference=reference, price=price
@@ -15,5 +13,12 @@ def new_product(
         return e
 
 
-def get_products():
+def delete(stock_id: int) -> None:
+    try:
+        Product.delete_by_id(stock_id)
+    except Exception as e:
+        print(e)
+
+
+def get_all():
     return [item.__data__ for item in Product.select()]
