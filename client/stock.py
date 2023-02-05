@@ -39,7 +39,6 @@ async def stock(client: Client):
                         "headerName": "ID",
                         "field": "id",
                         "filter": False,
-                        "width": 10,
                     },
                     {"headerName": "Nome do Produto", "field": "name"},
                     {"headerName": "Quantidade", "field": "quantity"},

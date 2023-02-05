@@ -1,6 +1,7 @@
 from nicegui import ui
 
 from components import clock
+from javascript import add_css
 
 
 def menu_button(text: str, path: str):
@@ -8,12 +9,6 @@ def menu_button(text: str, path: str):
 
 
 async def render():
-    ui.add_head_html(
-        """
-        <style>
-        </style>
-        """
-    )
 
     with ui.left_drawer():
         with ui.column():
@@ -33,3 +28,4 @@ async def render():
                     menu_button("Estoque", "/client/stock")
 
                 await clock()
+                await add_css("ag-table-dark")
