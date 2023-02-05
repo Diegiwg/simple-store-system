@@ -5,12 +5,16 @@
         }
     ],
     "settings": {
+        "editor.formatOnSave": true,
         "python.analysis.autoSearchPaths": true,
+        "python.analysis.typeCheckingMode": "basic",
         "python.formatting.provider": "black",
         "python.linting.enabled": true,
         "python.linting.lintOnSave": true,
         "python.linting.pylamaEnabled": true,
-        "python.linting.prospectorEnabled": true,
+        "editor.inlayHints.enabled": "on",
+        "python.analysis.inlayHints.variableTypes": true,
+        "python.analysis.inlayHints.functionReturnTypes": true,
         "vsintellicode.python.completionsEnabled": true
     },
     "extensions": {

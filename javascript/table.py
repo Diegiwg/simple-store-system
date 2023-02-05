@@ -12,7 +12,10 @@ def default_col_def():
 
 
 async def get_selected_row(table_id):
-    data = await run_javascript(
-        f"return JSON.stringify(getElement({table_id}).gridOptions.api.getSelectedRows());"
+    data: str = (
+        await run_javascript(
+            f"return JSON.stringify(getElement({table_id}).gridOptions.api.getSelectedRows());"
+        )
+        or "[]"
     )
     return json.loads(data)
