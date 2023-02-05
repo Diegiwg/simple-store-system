@@ -18,7 +18,7 @@ products_table_instance: ui.table
 
 
 def load_data_from_api():
-    data = api.products.get_products()
+    data = api.products.get_all()
     products_table_instance.options["rowData"] = data
     products_table_instance.update()
 
@@ -35,7 +35,7 @@ async def new_product_handler():
         ui.notify(message="Informações do Produto estão incompletas!", type="negative")
         return
 
-    api.products.new_product(
+    api.products.new(
         form_data.name, form_data.brand, form_data.reference, form_data.price
     )
     load_data_from_api()

@@ -5,24 +5,33 @@ import components
 from client import dialog, layout
 from javascript import table
 
-products_table: ui.table
+table_instance: ui.table
 
 
 def load_data_from_api():
-    data = api.products.get_products()
-    products_table.options["rowData"] = data
-    products_table.update()
+    data = api.products.get_all()
+    table_instance.options["rowData"] = data
+    table_instance.update()
+
+
+async def delete_product_item():
+    item = await table.return_selected_item(table_instance.id)
+    print(item)
+    if item is None:
+        return
+    api.products.delete(item)
+    load_data_from_api()
 
 
 @ui.page(path="/client/products", title="Produtos")
 async def products(client: Client):
-    global products_table
+    global table_instance
     client.on_connect(layout.render)
 
     with ui.card().style(add="width: 100%; height: 95vh;"):
         components.page_title("Produtos")
 
-        products_table = ui.table(
+        table_instance = ui.table(
             {
                 "defaultColDef": table.default_col_def(),
                 "columnDefs": [
@@ -46,8 +55,10 @@ async def products(client: Client):
         ):
             ui.button(
                 "Cadastrar Produto",
-                on_click=lambda: dialog.new_product(products_table).open(),
+                on_click=lambda: dialog.new_product(table_instance).open(),
             )
             with ui.row():
                 ui.button("Editar").style(add="width: 8rem;")
-                ui.button("Remover").style(add="width: 8rem;")
+                ui.button("Remover", on_click=delete_product_item).style(
+                    add="width: 8rem;"
+                )

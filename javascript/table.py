@@ -19,3 +19,11 @@ async def get_selected_row(table_id):
         or "[]"
     )
     return json.loads(data)
+
+
+async def return_selected_item(table_id: int) -> int | None:
+    selected_row = await get_selected_row(table_id)
+    if len(selected_row) == 0:
+        return None
+
+    return int(selected_row[0]["id"])
