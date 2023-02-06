@@ -33,7 +33,7 @@ async def new_stock_handler():
         ui.notify(message="A quantidade em estoque não pode ser zero!", type="warning")
         return
 
-    product_id = await table.return_selected_item(internal_table_instance.id)
+    product_id = await table.get_selected_rows(internal_table_instance.id)
     if product_id is None:
         ui.notify(message="Produto não encontrado!", type="negative")
         return
