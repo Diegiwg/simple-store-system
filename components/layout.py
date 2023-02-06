@@ -45,7 +45,6 @@ def menu_button(text: str, path: str):
 
 
 async def render():
-
     with ui.left_drawer():
         with ui.column():
             with ui.row().style(
@@ -60,8 +59,8 @@ async def render():
             ):
                 with ui.column().style(add="width: 100%;"):
                     menu_button("Vendas", "/")
-                    menu_button("Produtos", "/client/products")
-                    menu_button("Estoque", "/client/stock")
+                    menu_button("Produtos", "/products")
+                    menu_button("Estoque", "/stock")
 
                 await clock()
                 # await load_css(css_dark_table_theme_code)
