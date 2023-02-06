@@ -1,12 +1,11 @@
 from nicegui import Client, ui
 
 import components
-from client import layout
 
 
 @ui.page("/", title="Vendas")
-def index(client: Client):
-    client.on_connect(layout.render)
+def render(client: Client):
+    client.on_connect(components.render_layout)
 
     with ui.card().style(add="width: 100%; height: 95vh;"):
         components.page_title("Vendas")

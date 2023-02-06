@@ -2,7 +2,6 @@ from nicegui import Client, ui
 
 import api
 import components
-from client import layout, dialog
 from javascript import table
 
 stock_table: ui.table
@@ -23,10 +22,10 @@ async def delete_stock_item():
     load_data_from_api()
 
 
-@ui.page(path="/client/stock", title="Estoque")
-async def stock(client: Client):
+@ui.page(path="/stock", title="Estoque")
+async def render(client: Client):
     global stock_table
-    client.on_connect(layout.render)
+    client.on_connect(components.render_layout)
 
     with ui.card().style(add="width: 100%; height: 95vh;"):
         components.page_title("Estoque")
@@ -54,7 +53,7 @@ async def stock(client: Client):
         ):
             ui.button(
                 "Adicionar Produto",
-                on_click=dialog.new_stock(
+                on_click=components.modal_new_stock(
                     table_instance=stock_table, client_instance=client
                 ).open,
             )

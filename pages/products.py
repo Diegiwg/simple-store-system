@@ -2,7 +2,6 @@ from nicegui import Client, ui
 
 import api
 import components
-from client import dialog, layout
 from javascript import table
 
 table_instance: ui.table
@@ -23,10 +22,10 @@ async def delete_product_item():
     load_data_from_api()
 
 
-@ui.page(path="/client/products", title="Produtos")
-async def products(client: Client):
+@ui.page(path="/products", title="Produtos")
+async def render(client: Client):
     global table_instance
-    client.on_connect(layout.render)
+    client.on_connect(components.render_layout)
 
     with ui.card().style(add="width: 100%; height: 95vh;"):
         components.page_title("Produtos")
@@ -62,7 +61,7 @@ async def products(client: Client):
         ):
             ui.button(
                 "Cadastrar Produto",
-                on_click=lambda: dialog.new_product(table_instance).open(),
+                on_click=lambda: components.modal_new_product(table_instance).open(),
             )
             with ui.row():
                 ui.button("Editar").style(add="width: 8rem;")
