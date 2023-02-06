@@ -15,7 +15,7 @@ def load_data_from_api():
 
 
 async def delete_stock_item():
-    item = await table.return_selected_item(stock_table.id)
+    item = await table.get_selected_rows(stock_table.id)
     print(item)
     if item is None:
         return
