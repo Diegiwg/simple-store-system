@@ -1,4 +1,4 @@
-from data import Product
+from models.product import Product
 
 
 def new(name: str, brand: str, reference: str, price: float) -> Product | Exception:

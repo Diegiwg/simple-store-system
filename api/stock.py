@@ -1,4 +1,5 @@
-from data import Product, Stock
+from models.product import Product
+from models.stock import Stock
 
 
 class StockInfo:
