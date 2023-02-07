@@ -1,7 +1,9 @@
-from nicegui import Client, ui
+from nicegui import ui
+from nicegui.page import globals
 
 import api
 import components
+import routes
 from javascript import table
 
 table_instance: ui.table
@@ -22,13 +24,13 @@ async def delete_product_item():
     load_data_from_api()
 
 
-@ui.page(path="/products", title="Produtos")
-async def render(client: Client):
+async def page():
     global table_instance
-    client.on_connect(components.render_layout)
 
-    with ui.card().style(add="width: 100%; height: 95vh;"):
-        components.page_title("Produtos")
+    with ui.column() as element:
+
+        globals.title = routes.route_manager.current_route.title
+        components.page_title(routes.route_manager.current_route.title)
 
         table_instance = ui.table(
             {
@@ -54,7 +56,7 @@ async def render(client: Client):
                 "rowData": [],
             }
         ).style(add="height: 74vh;")
-        client.on_connect(load_data_from_api)  # load data and update table
+        load_data_from_api()  # load data and update table
 
         with ui.row().style(
             add="width: 100%; display: flex; justify-content: space-between;"
@@ -68,3 +70,8 @@ async def render(client: Client):
                 ui.button("Remover", on_click=delete_product_item).style(
                     add="width: 8rem;"
                 )
+    return element
+
+
+products_route = routes.Route("products", "Produtos", page)
+routes.route_manager.register_route(products_route)

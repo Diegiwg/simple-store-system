@@ -44,7 +44,7 @@ async def new_stock_handler():
     dialog_instance.close()
 
 
-def new_stock(table_instance: ui.table, client_instance: Client):
+def new_stock(table_instance: ui.table):
     global internal_table_instance, stock_table_instance, dialog_instance, form_product_quantity
     with ui.dialog() as dl, ui.card().style(
         add="width: 100%; display: flex; flex-direction: column; align-items: stretch;"
@@ -65,7 +65,7 @@ def new_stock(table_instance: ui.table, client_instance: Client):
                 "rowData": [],
             }
         )
-        client_instance.on_connect(load_data_from_api)
+        load_data_from_api()
         ui.number(label="Quantidade em Estoque").bind_value(
             form_product_quantity, target_name="quantity"
         )
