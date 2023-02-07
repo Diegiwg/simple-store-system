@@ -3,6 +3,7 @@ from nicegui.page import globals
 
 import components
 import routes
+from styles import Typography
 
 
 async def page():
@@ -11,7 +12,13 @@ async def page():
         globals.title = routes.route_manager.current_route.title
         components.page_title(routes.route_manager.current_route.title)
 
-        ui.label("WIP").classes(add="text-center w-full")
+        wip = ui.label("00 MUITO TEXTO 11").classes(add="w-full")
+        (
+            Typography(wip)
+            .font_size("6xl")
+            .font_variant_numeric("oldstyle-nums")
+            .font_weight("thin")
+        )
 
     return element
 
