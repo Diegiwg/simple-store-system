@@ -20,4 +20,4 @@ async def render(client: Client):
 
 
 app.add_static_files("/static", "static")
-ui.run(binding_refresh_interval=0.5, uvicorn_logging_level="")
+ui.run(binding_refresh_interval=0.5)
