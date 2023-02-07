@@ -1,3 +1,3 @@
-from pages.products import render as render_products
-from pages.sales import render as render_sales
-from pages.stock import render as render_stock
+from pages.products import page as page_products
+from pages.sales import page as page_sales
+from pages.stock import page as page_stock

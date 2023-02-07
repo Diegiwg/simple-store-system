@@ -1,5 +1,6 @@
 from nicegui import ui
 
+from routes import Redirect
 from components import clock
 from javascript import load_css
 
@@ -41,7 +42,7 @@ css_dark_table_theme_code = """
 
 
 def menu_button(text: str, path: str):
-    return ui.button(text, on_click=lambda: ui.open(path)).style(add="width: 100%;")
+    return ui.button(text, on_click=Redirect(path).run).style(add="width: 100%;")
 
 
 async def render():
@@ -58,9 +59,9 @@ async def render():
                 add="width: 100%; height: 85vh; display: grid; align-content: space-between;"
             ):
                 with ui.column().style(add="width: 100%;"):
-                    menu_button("Vendas", "/")
-                    menu_button("Produtos", "/products")
-                    menu_button("Estoque", "/stock")
+                    menu_button("Vendas", "sales")
+                    menu_button("Produtos", "products")
+                    menu_button("Estoque", "stock")
 
                 await clock()
                 # await load_css(css_dark_table_theme_code)

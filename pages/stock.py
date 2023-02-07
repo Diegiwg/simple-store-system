@@ -1,7 +1,9 @@
-from nicegui import Client, ui
+from nicegui import ui
+from nicegui.page import globals
 
 import api
 import components
+import routes
 from javascript import table
 
 stock_table: ui.table
@@ -22,13 +24,12 @@ async def delete_stock_item():
     load_data_from_api()
 
 
-@ui.page(path="/stock", title="Estoque")
-async def render(client: Client):
+async def page():
     global stock_table
-    client.on_connect(components.render_layout)
 
-    with ui.card().style(add="width: 100%; height: 95vh;"):
-        components.page_title("Estoque")
+    with ui.column().style(add="width: 100%; height: 95vh;") as element:
+        globals.title = routes.route_manager.current_route.title
+        components.page_title(routes.route_manager.current_route.title)
 
         stock_table = ui.table(
             options={
@@ -46,19 +47,22 @@ async def render(client: Client):
                 "rowData": [],
             },
         ).style(add="height: 74vh;")
-        client.on_connect(load_data_from_api)  # load data and update table
+        load_data_from_api()  # load data and update table
 
         with ui.row().style(
             add="width: 100%; display: flex; justify-content: space-between;"
         ):
             ui.button(
                 "Adicionar Produto",
-                on_click=components.modal_new_stock(
-                    table_instance=stock_table, client_instance=client
-                ).open,
+                on_click=components.modal_new_stock(stock_table).open,
             )
             with ui.row():
                 ui.button(text="Editar").style(add="width: 8rem;")
                 ui.button(text="Remover", on_click=delete_stock_item).style(
                     add="width: 8rem;"
                 )
+    return element
+
+
+stock_route = routes.Route("stock", "Estoque", page)
+routes.route_manager.register_route(stock_route)
