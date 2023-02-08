@@ -3,7 +3,7 @@ from nicegui.page import globals
 
 import api
 import components
-import routes
+from routes import Route, route_manager
 from javascript import table
 
 table_instance: ui.table
@@ -17,7 +17,6 @@ def load_data_from_api():
 
 async def delete_product_item():
     item = await table.get_selected_rows(table_instance.id)
-    print(item)
     if item is None:
         return
     api.products.delete(item)
@@ -27,20 +26,15 @@ async def delete_product_item():
 async def page():
     global table_instance
 
-    with ui.column() as element:
+    with route_manager.root_element:
 
-        globals.title = routes.route_manager.current_route.title
-        components.page_title(routes.route_manager.current_route.title)
+        globals.title = route_manager.current_route.title
+        components.page_title(route_manager.current_route.title)
 
         table_instance = ui.table(
             {
                 "defaultColDef": table.default_col_def(),
                 "columnDefs": [
-                    {
-                        "headerName": "ID",
-                        "field": "id",
-                        "filter": False,
-                    },
                     {"headerName": "Nome", "field": "name"},
                     {"headerName": "Marca", "field": "brand"},
                     {"headerName": "Referencia", "field": "reference"},
@@ -70,8 +64,7 @@ async def page():
                 ui.button("Remover", on_click=delete_product_item).style(
                     add="width: 8rem;"
                 )
-    return element
 
 
-products_route = routes.Route("products", "Produtos", page)
-routes.route_manager.register_route(products_route)
+products_route = Route("products", "Produtos", page)
+route_manager.register_route(products_route)

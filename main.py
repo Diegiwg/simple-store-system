@@ -2,21 +2,16 @@ from nicegui import Client, app, ui
 
 import components
 import pages
-import routes
+from routes import route_manager
 
-routes.route_manager.set_route("sales")
+route_manager.set_route("sales")
 
 
 @ui.page("/")
 async def render(client: Client):
-    with ui.card().style(add="width: 100%; height: 95vh;"):
-        client.on_connect(components.render_layout)
-
-        with ui.column().style(add="width: 100%; height: 95vh;") as root:
-            element = await routes.route_manager.run_route()
-
-        routes.state.root = root
-        routes.state.element = element
+    client.on_connect(components.render_layout)
+    route_manager.set_root_element(ui.card().style(add="width: 100%; height: 95vh;"))
+    await route_manager.run_route()
 
 
 app.add_static_files("/static", "static")
