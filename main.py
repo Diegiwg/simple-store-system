@@ -4,7 +4,7 @@ import components
 import pages
 from routes import route_manager
 
-route_manager.set_route("stock")
+route_manager.set_route("sales")
 
 
 @ui.page("/")

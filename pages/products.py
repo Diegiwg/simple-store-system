@@ -17,7 +17,6 @@ def load_data_from_api():
 
 async def delete_product_item():
     item = await table.get_selected_rows(table_instance.id)
-    print(item)
     if item is None:
         return
     api.products.delete(item)
@@ -36,11 +35,6 @@ async def page():
             {
                 "defaultColDef": table.default_col_def(),
                 "columnDefs": [
-                    {
-                        "headerName": "ID",
-                        "field": "id",
-                        "filter": False,
-                    },
                     {"headerName": "Nome", "field": "name"},
                     {"headerName": "Marca", "field": "brand"},
                     {"headerName": "Referencia", "field": "reference"},

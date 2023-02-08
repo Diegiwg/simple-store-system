@@ -17,7 +17,6 @@ def load_data_from_api():
 
 async def delete_stock_item():
     item = await table.get_selected_rows(stock_table.id)
-    print(item)
     if item is None:
         return
     api.stock.delete(item)
@@ -35,11 +34,6 @@ async def page():
             options={
                 "defaultColDef": table.default_col_def(),
                 "columnDefs": [
-                    {
-                        "headerName": "ID",
-                        "field": "id",
-                        "filter": False,
-                    },
                     {"headerName": "Nome do Produto", "field": "name"},
                     {"headerName": "Quantidade", "field": "quantity"},
                 ],
@@ -54,7 +48,7 @@ async def page():
         ):
             ui.button(
                 "Adicionar Produto",
-                on_click=components.modal_new_stock(stock_table).open,
+                on_click=lambda: components.modal_new_stock(stock_table).open(),
             )
             with ui.row():
                 ui.button(text="Editar").style(add="width: 8rem;")
