@@ -1,2 +1,1 @@
-from api import products
-from api import stock
+from api import products, stock

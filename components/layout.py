@@ -1,8 +1,8 @@
 from nicegui import ui
 
-from routes import Redirect
 from components import clock
 from javascript import load_css
+from routes import Redirect
 
 css_dark_table_theme_code = """
 .ag-theme-balham {
