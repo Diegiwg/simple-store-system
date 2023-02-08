@@ -3,7 +3,7 @@ from nicegui.page import globals
 
 import api
 import components
-import routes
+from routes import Route, route_manager
 from javascript import table
 
 stock_table: ui.table
@@ -27,9 +27,9 @@ async def delete_stock_item():
 async def page():
     global stock_table
 
-    with ui.column().style(add="width: 100%; height: 95vh;") as element:
-        globals.title = routes.route_manager.current_route.title
-        components.page_title(routes.route_manager.current_route.title)
+    with route_manager.root_element:
+        globals.title = route_manager.current_route.title
+        components.page_title(route_manager.current_route.title)
 
         stock_table = ui.table(
             options={
@@ -61,8 +61,7 @@ async def page():
                 ui.button(text="Remover", on_click=delete_stock_item).style(
                     add="width: 8rem;"
                 )
-    return element
 
 
-stock_route = routes.Route("stock", "Estoque", page)
-routes.route_manager.register_route(stock_route)
+stock_route = Route("stock", "Estoque", page)
+route_manager.register_route(stock_route)
