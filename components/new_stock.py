@@ -1,4 +1,4 @@
-from nicegui import ui, Client
+from nicegui import Client, ui
 
 import api
 import components

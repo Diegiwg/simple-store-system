@@ -6,8 +6,11 @@
     ],
     "settings": {
         "editor.formatOnSave": true,
-        "python.analysis.autoSearchPaths": true,
-        "python.analysis.typeCheckingMode": "basic",
+        "editor.formatOnSaveMode": "file",
+        "editor.codeActionsOnSave": {
+            "source.fixAll": true,
+            "source.organizeImports": true
+        },
         "python.formatting.provider": "black",
         "python.linting.enabled": true,
         "python.linting.lintOnSave": true,
@@ -15,18 +18,12 @@
         "editor.inlayHints.enabled": "on",
         "python.analysis.inlayHints.variableTypes": true,
         "python.analysis.inlayHints.functionReturnTypes": true,
-        "vsintellicode.python.completionsEnabled": true
-    },
-    "extensions": {
-        "recommendations": [
-            "ms-python.python",
-            "ms-python.vscode-pylance",
-            "ms-python.black-formatter",
-            "ms-python.isort",
-            "EditorConfig.EditorConfig",
-            "VisualStudioExptTeam.vscodeintellicode",
-            "christian-kohler.path-intellisense",
-            "twixes.pypi-assistant"
-        ]
+        "python.analysis.autoSearchPaths": true,
+        "python.analysis.typeCheckingMode": "basic",
+        "python.analysis.importFormat": "relative",
+        "python.analysis.useLibraryCodeForTypes": true,
+        "vsintellicode.python.completionsEnabled": true,
+        "vsintellicode.features.python.deepLearning": "enabled",
+        "vsintellicode.modify.editor.suggestSelection": "enabled"
     }
 }

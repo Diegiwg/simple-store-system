@@ -1,4 +1,5 @@
 from nicegui.element import Element
+
 from styles.types import typography
 
 

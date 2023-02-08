@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import Callable
+
 from nicegui.element import Element
 
 
