@@ -12,7 +12,7 @@
             "source.organizeImports": true
         },
         "python.formatting.provider": "black",
-        "python.linting.enabled": false,
+        "python.linting.enabled": true,
         "python.linting.lintOnSave": true,
         "python.linting.pylamaEnabled": true,
         "editor.inlayHints.enabled": "on",
