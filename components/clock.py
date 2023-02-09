@@ -22,19 +22,26 @@ async def clock():
     with ui.card().classes(add="__python__clock-node").style(
         add="display: grid; justify-items: center; gap: 0;"
     ) as clock_node:
-        time = ui.label("").classes(
-            add="__python__clock-time"
-        )  # .style(add="font-size: 2rem;")
-        date = ui.label("").classes(add="__python__clock-date")
+
+        (
+            Typography(ui.label(""))
+            .font_family("font-mono")
+            .font_size("text-4xl")
+            .font_weight("font-bold")
+            .text_color("text-neutral-700")
+            .font_smoothing("antialiased")
+            .element
+        ).classes(add="__python__clock-time")
+
+        (
+            Typography(ui.label(""))
+            .font_family("font-mono")
+            .font_size("text-lg")
+            .font_weight("font-medium")
+            .text_color("text-neutral-500")
+            .element
+        ).classes(add="__python__clock-date")
 
         await javascript.load_js(js_clock_code)
-
-        Typography(time).font_family("mono").font_size("4xl").font_weight(
-            "bold"
-        ).text_color("neutral-700").font_smoothing("antialiased")
-
-        Typography(date).font_family("mono").font_size("lg").font_weight(
-            "medium"
-        ).text_color("neutral-500")
 
     return clock_node

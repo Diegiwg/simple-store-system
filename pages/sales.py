@@ -15,9 +15,9 @@ async def page():
         wip = ui.label("00 MUITO TEXTO 11").classes(add="w-full")
         (
             Typography(wip)
-            .font_size("6xl")
+            .font_size("text-6xl")
             .font_variant_numeric("oldstyle-nums")
-            .font_weight("thin")
+            .font_weight("font-thin")
         )
 
 
