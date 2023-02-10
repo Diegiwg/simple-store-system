@@ -1,9 +1,14 @@
-from data import database_instance
-from models.product import Product
-from models.stock import Stock
+from data import session
+from models.models import Product, Stock
 
-database_instance.connect()
+products = session.query(Product).all()
+print(products)
 
-database_instance.create_tables([Product, Stock])
+# Create a new stock
+new_stock = Stock(quantity=10, product_id=products[0].id, product=products[0])
+session.add(new_stock)
+session.commit()
 
-database_instance.close()
+# Get all with stock
+stocks = session.query(Stock).all()
+print(stocks)
