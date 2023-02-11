@@ -4,6 +4,6 @@ from sqlalchemy.orm import Session
 from models import Base
 
 
-engine = create_engine("sqlite:///./data/db/dev.sqlite?check_same_thread=False")
-Base.metadata.create_all(engine)
+engine = create_engine("sqlite:///./database/dev.sqlite")
 session = Session(engine)
+Base.metadata.create_all(engine)

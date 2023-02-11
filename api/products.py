@@ -1,33 +1,27 @@
-from models.stock import Stock
-from models.product import Product
-import api
+from dataclasses import dataclass
+from models import Product, Stock
+from database import session
 
 
-class ProductInfo:
-    def __init__(self, id, name, brand, reference, price) -> None:
-        self.id = id
-        self.name = name
-        self.brand = brand
-        self.reference = reference
-        self.price = price
-
-
-def new(name: str, brand: str, reference: str, price: float) -> Product:
-    product: Product = Product.get_or_create(
-        name=name, brand=brand, reference=reference, price=price
-    )
-    return product
-
-
-def delete(id: int) -> None:
+def create(name: str, brand: str, reference: str, price: float):
     try:
-        exist = Stock.select().where(Stock.product == id).get()
-        api.stock.delete(exist.id)
-    except Exception:
-        print("Produto não está vinculado ao estoque")
+        product = Product(name=name, brand=brand, reference=reference, price=price)
+        session.add(product)
+        session.commit()
+    except Exception as e:
+        session.rollback()
+        raise e
 
-    Product.delete_by_id(id)
+
+def delete(id: int):
+    product = session.query(Product).get(id)
+    if not product:
+        return
+
+    session.delete(product)
+    session.commit()
 
 
 def get_all():
-    return [item.__data__ for item in Product.select().order_by(Product.name)]
+    products = session.query(Product).order_by(Product.name).all()
+    return products

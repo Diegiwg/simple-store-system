@@ -3,14 +3,6 @@ import json
 from nicegui.ui import run_javascript
 
 
-def default_col_def():
-    return {
-        "sortable": True,
-        "filter": True,
-        "floatingFilter": True,
-    }
-
-
 async def call_api_function(table_id, function_name):
     data: str = (
         await run_javascript(
