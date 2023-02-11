@@ -3,24 +3,19 @@ from nicegui.page import globals
 
 import api
 import components
+import functions
 from routes import Route, route_manager
-from javascript import table
+import javascript
 
 stock_table: ui.table
 
 
-def load_data_from_api():
-    data = api.stock.get_all()
-    stock_table.options["rowData"] = data
-    stock_table.update()
-
-
 async def delete_stock_item():
-    item = await table.get_selected_rows(stock_table.id)
+    item = await javascript.table.get_selected_rows(stock_table.id)
     if item is None:
         return
     api.stock.delete(item)
-    load_data_from_api()
+    functions.table.update_data_from_api(api.stock, stock_table)
 
 
 async def page():
@@ -32,16 +27,16 @@ async def page():
 
         stock_table = ui.table(
             options={
-                "defaultColDef": table.default_col_def(),
+                "defaultColDef": functions.table.default_col_def(),
                 "columnDefs": [
                     {"headerName": "Nome do Produto", "field": "name"},
-                    {"headerName": "Quantidade", "field": "quantity"},
+                    {"headerName": "Quantidade", "field": "stock.quantity"},
                 ],
                 "rowSelection": "single",
                 "rowData": [],
             },
         ).style(add="height: 74vh;")
-        load_data_from_api()  # load data and update table
+        functions.table.update_data_from_api(api.stock, stock_table)
 
         with ui.row().style(
             add="width: 100%; display: flex; justify-content: space-between;"

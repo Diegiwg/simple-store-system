@@ -3,24 +3,19 @@ from nicegui.page import globals
 
 import api
 import components
+import functions
+import javascript
 from routes import Route, route_manager
-from javascript import table
 
 table_instance: ui.table
 
 
-def load_data_from_api():
-    data = api.products.get_all()
-    table_instance.options["rowData"] = data
-    table_instance.update()
-
-
 async def delete_product_item():
-    item = await table.get_selected_rows(table_instance.id)
+    item = await javascript.table.get_selected_rows(table_instance.id)
     if item is None:
         return
     api.products.delete(item)
-    load_data_from_api()
+    functions.table.update_data_from_api(api.products, table_instance)
 
 
 async def page():
@@ -33,7 +28,7 @@ async def page():
 
         table_instance = ui.table(
             {
-                "defaultColDef": table.default_col_def(),
+                "defaultColDef": functions.table.default_col_def(),
                 "columnDefs": [
                     {"headerName": "Nome", "field": "name"},
                     {"headerName": "Marca", "field": "brand"},
@@ -50,7 +45,7 @@ async def page():
                 "rowData": [],
             }
         ).style(add="height: 74vh;")
-        load_data_from_api()  # load data and update table
+        functions.table.update_data_from_api(api.products, table_instance)
 
         with ui.row().style(
             add="width: 100%; display: flex; justify-content: space-between;"

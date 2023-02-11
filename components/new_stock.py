@@ -1,8 +1,9 @@
-from nicegui import Client, ui
+from nicegui import ui
 
 import api
 import components
-from javascript import table
+import functions
+import javascript
 
 
 class ProductQuantity:
@@ -16,12 +17,6 @@ stock_table_instance: ui.table
 dialog_instance: ui.dialog
 
 
-def load_data_from_api():
-    internal_data = api.stock.get_all_products_without_stock()
-    internal_table_instance.options["rowData"] = internal_data
-    internal_table_instance.update()
-
-
 async def new_stock_handler():
     global dialog_instance, form_product_quantity
 
@@ -29,18 +24,16 @@ async def new_stock_handler():
         ui.notify(message="A quantidade em estoque não pode ser zero!", type="warning")
         return
 
-    product_id = await table.get_selected_rows(internal_table_instance.id)
+    product_id = await javascript.table.get_selected_rows(internal_table_instance.id)
     if product_id is None:
         ui.notify(message="Produto não encontrado!", type="negative")
         return
 
-    api.stock.new(product_id, form_product_quantity.quantity)
+    api.stock.create(product_id, form_product_quantity.quantity)
     form_product_quantity.quantity = 0
-    load_data_from_api()
     dialog_instance.close()
 
-    stock_table_instance.options["rowData"] = api.stock.get_all()
-    stock_table_instance.update()
+    functions.table.update_data_from_api(api.stock, stock_table_instance)
 
 
 def new_stock(table_instance: ui.table):
@@ -56,17 +49,17 @@ def new_stock(table_instance: ui.table):
 
         internal_table_instance = ui.table(
             options={
-                "defaultColDef": table.default_col_def(),
+                "defaultColDef": functions.table.default_col_def(),
                 "columnDefs": [
                     {"headerName": "Nome do Produto", "field": "name"},
                     {"headerName": "Marca do Produto", "field": "brand"},
                     {"headerName": "Refrencia do Produto", "field": "reference"},
                 ],
                 "rowSelection": "single",
-                "rowData": [],
+                "rowData": api.stock.get_all_without_stock(),
             }
         )
-        load_data_from_api()
+
         ui.number(label="Quantidade em Estoque").bind_value(
             form_product_quantity, target_name="quantity"
         )

@@ -1,2 +1,4 @@
 nicegui==1.1.5
+SQLAlchemy==2.0.3
+SQLAlchemy-serializer
 peewee==3.15.4

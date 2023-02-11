@@ -1,57 +1,36 @@
-from models.product import Product
-from models.stock import Stock
-import api
+from dataclasses import dataclass
+from models import Stock, Product
+from database import session
 
 
-class StockInfo:
-    def __init__(self, id: int, name: str, quantity: int) -> None:
-        self.id = id
-        self.name = name
-        self.quantity = quantity
+def create(product_id: int, quantity: int):
+    stock = Stock(product_id=product_id, quantity=quantity)
+    session.add(stock)
+    session.commit()
 
 
-def new(product_id: int, quantity: int) -> Stock:
-    product = Product.get_by_id(product_id)
-    stock = Stock.get_or_create(product=product.id, quantity=quantity)
-    return stock
+def delete(stock_id: int):
+    stock = session.query(Stock).get(stock_id)
+    if not stock:
+        return
+
+    session.delete(stock)
+    session.commit()
 
 
-def delete(stock_id: int) -> None:
-    Stock.delete_by_id(stock_id)
+def get_all() -> list[Product]:
+    stocks = (
+        session.query(Stock)
+        .join(Product)
+        .add_entity(Product)
+        .order_by(Stock.product_id)
+        .all()
+    )
+    return [stock.Product for stock in stocks]
 
 
-def get_all() -> list[StockInfo]:
-    data = []
-    for item in Stock.select(Stock.id, Product.name, Stock.quantity).join(Product):
-        data.append(
-            StockInfo(
-                id=item.id, name=item.product.name, quantity=item.quantity
-            ).__dict__
-        )
-
-    return data
-
-
-def get_all_products_without_stock():
-    products_in_stock = Product.select().join(Stock)
-    products = Product.select()
-
-    data = []
-    for product in products:
-        in_stock = False
-        for stock in products_in_stock:
-            if product == stock:
-                in_stock = True
-
-        if in_stock == False:
-            data.append(
-                api.products.ProductInfo(
-                    product.id,
-                    product.name,
-                    product.brand,
-                    product.reference,
-                    product.price,
-                ).__dict__
-            )
-
-    return data
+def get_all_without_stock():
+    products = (
+        session.query(Product).where(Product.stock == None).order_by(Product.id).all()
+    )
+    return [product.to_dict() for product in products]
