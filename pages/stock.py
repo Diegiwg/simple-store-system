@@ -4,17 +4,18 @@ from nicegui.page import globals
 import api
 import components
 import functions
-from routes import Route, route_manager
 import javascript
+import styles
+from routes import Route, route_manager
 
 stock_table: ui.table
 
 
 async def delete_stock_item():
-    item = await javascript.table.get_selected_rows(stock_table.id)
+    item = await javascript.table.get_selected_row(stock_table.id)
     if item is None:
         return
-    api.stock.delete(item)
+    api.stock.delete(item["stock"]["id"])
     functions.table.update_data_from_api(api.stock, stock_table)
 
 
@@ -43,13 +44,18 @@ async def page():
         ):
             ui.button(
                 "Adicionar Produto",
-                on_click=lambda: components.modal_new_stock(stock_table).open(),
+                on_click=components.stock_dialog(stock_table).run,
             )
             with ui.row():
-                ui.button(text="Editar").style(add="width: 8rem;")
-                ui.button(text="Remover", on_click=delete_stock_item).style(
-                    add="width: 8rem;"
+                edit_btn = ui.button(
+                    text="Editar",
+                    on_click=components.stock_dialog(stock_table, stock_table.id).run,
                 )
+                remove_btn = ui.button(text="Remover", on_click=delete_stock_item)
+
+                btn_sizing = styles.Sizing().width("w-32")
+                btn_sizing.apply(edit_btn)
+                btn_sizing.apply(remove_btn)
 
 
 stock_route = Route("stock", "Estoque", page)

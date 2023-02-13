@@ -5,16 +5,17 @@ import api
 import components
 import functions
 import javascript
+import styles
 from routes import Route, route_manager
 
 table_instance: ui.table
 
 
 async def delete_product_item():
-    item = await javascript.table.get_selected_rows(table_instance.id)
+    item = await javascript.table.get_selected_row(table_instance.id)
     if item is None:
         return
-    api.products.delete(item)
+    api.products.delete(item["id"])
     functions.table.update_data_from_api(api.products, table_instance)
 
 
@@ -52,13 +53,21 @@ async def page():
         ):
             ui.button(
                 "Cadastrar Produto",
-                on_click=lambda: components.modal_new_product(table_instance).open(),
+                on_click=components.product_dialog(table_instance).run,
             )
             with ui.row():
-                ui.button("Editar").style(add="width: 8rem;")
-                ui.button("Remover", on_click=delete_product_item).style(
-                    add="width: 8rem;"
+                edit_btn = ui.button(
+                    "Editar",
+                    on_click=components.product_dialog(
+                        products_table=table_instance,
+                        product_info=True,
+                    ).run,
                 )
+                remove_btn = ui.button("Remover", on_click=delete_product_item)
+
+                btn_sizing = styles.Sizing().width("w-32")
+                btn_sizing.apply(edit_btn)
+                btn_sizing.apply(remove_btn)
 
 
 products_route = Route("products", "Produtos", page)

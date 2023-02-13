@@ -1,6 +1,7 @@
-from dataclasses import dataclass
-from models import Stock, Product
+from sqlalchemy import update
+
 from database import session
+from models import Product, Stock
 
 
 def create(product_id: int, quantity: int):
@@ -15,6 +16,17 @@ def delete(stock_id: int):
         return
 
     session.delete(stock)
+    session.commit()
+
+
+def edit(info: Stock):
+    session.execute(
+        update(Stock)
+        .where(Stock.id == info.id)
+        .values(
+            quantity=info.quantity,
+        )
+    )
     session.commit()
 
 
