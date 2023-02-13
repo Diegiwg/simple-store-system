@@ -3,7 +3,6 @@ from nicegui import ui
 import api
 import components
 import functions
-import javascript
 import styles
 
 
@@ -22,7 +21,7 @@ stock_table: ui.table
 
 async def load_form_data():
     global form_data, product_table
-    data = await javascript.table.get_selected_row(stock_table.id)
+    data = await stock_table.get_selected_row()
     if data is None:
         return False
 
@@ -82,7 +81,7 @@ async def new_stock_handler():
         ui.notify(message="A quantidade em estoque não pode ser zero!", type="warning")
         return
 
-    form_data.product = await javascript.table.get_selected_row(product_table.id)
+    form_data.product = await product_table.get_selected_row()
     api.stock.create(form_data.product["id"], form_data.quantity)
     ui.notify("Produto adicionado ao Estoque com sucesso!", type="positive")
 

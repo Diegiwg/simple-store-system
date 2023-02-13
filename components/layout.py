@@ -22,7 +22,7 @@ async def render():
             with ui.row().style(
                 add="display: flex; align-items: center; justify-content: center; width: 100%;"
             ):
-                ui.image(source="/static/logo.png").props(add="width='50px'")
+                ui.image(source="/static/logo.png").style(add="width: 50px")
                 (
                     Typography(ui.label("QUEIROZ LUBRIFICANTES"))
                     .font_family("font-mono")

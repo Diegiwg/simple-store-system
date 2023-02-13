@@ -4,7 +4,6 @@ from nicegui.page import globals
 import api
 import components
 import functions
-import javascript
 import styles
 from routes import Route, route_manager
 
@@ -12,7 +11,7 @@ stock_table: ui.table
 
 
 async def delete_stock_item():
-    item = await javascript.table.get_selected_row(stock_table.id)
+    item = await stock_table.get_selected_row()
     if item is None:
         return
     api.stock.delete(item["stock"]["id"])
