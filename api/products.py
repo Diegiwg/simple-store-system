@@ -1,6 +1,9 @@
 from dataclasses import dataclass
-from models import Product, Stock
+
+from sqlalchemy import update
+
 from database import session
+from models import Product, Stock
 
 
 def create(name: str, brand: str, reference: str, price: float):
@@ -19,6 +22,20 @@ def delete(id: int):
         return
 
     session.delete(product)
+    session.commit()
+
+
+def edit(info: Product):
+    session.execute(
+        update(Product)
+        .where(Product.id == info.id)
+        .values(
+            name=info.name,
+            brand=info.brand,
+            reference=info.reference,
+            price=info.price,
+        )
+    )
     session.commit()
 
 
