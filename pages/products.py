@@ -4,7 +4,6 @@ from nicegui.page import globals
 import api
 import components
 import functions
-import javascript
 import styles
 from routes import Route, route_manager
 
@@ -12,7 +11,7 @@ table_instance: ui.table
 
 
 async def delete_product_item():
-    item = await javascript.table.get_selected_row(table_instance.id)
+    item = await table_instance.get_selected_row()
     if item is None:
         return
     api.products.delete(item["id"])

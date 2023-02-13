@@ -3,7 +3,6 @@ from nicegui import ui
 import api
 import components
 import functions
-import javascript
 import models
 import styles
 
@@ -14,7 +13,7 @@ products_table_instance: ui.table
 
 async def load_form_data():
     global form_data
-    data = await javascript.table.get_selected_row(products_table_instance.id)
+    data = await products_table_instance.get_selected_row()
     if data is None:
         return False
 
