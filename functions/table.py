@@ -4,6 +4,11 @@ def update_data_from_api(api_element, table_instance):
     table_instance.update()
 
 
+def refresh_table(table, data):
+    table.options["rowData"] = data
+    table.update()
+
+
 def default_col_def():
     return {
         "sortable": True,
