@@ -95,7 +95,7 @@ DIALOG = {
 }
 
 
-class Dialog:
+class product_dialog:
     def __init__(self, products_table: ui.table, product_info=None) -> None:
         self.products_table = products_table
         self.product_info = product_info

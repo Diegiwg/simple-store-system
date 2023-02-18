@@ -104,7 +104,7 @@ DIALOG = {
 }
 
 
-class Dialog:
+class stock_dialog:
     def __init__(self, table_instance: ui.table, product=None) -> None:
         global stock_table
         stock_table = table_instance

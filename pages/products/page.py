@@ -7,6 +7,8 @@ import functions
 import styles
 from routes import Route, route_manager
 
+from .product_info import product_dialog
+
 table_instance: ui.table
 
 
@@ -52,12 +54,12 @@ async def page():
         ):
             ui.button(
                 "Cadastrar Produto",
-                on_click=components.product_dialog(table_instance).run,
+                on_click=product_dialog(table_instance).run,
             )
             with ui.row():
                 edit_btn = ui.button(
                     "Editar",
-                    on_click=components.product_dialog(
+                    on_click=product_dialog(
                         products_table=table_instance,
                         product_info=True,
                     ).run,

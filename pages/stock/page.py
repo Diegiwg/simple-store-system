@@ -7,6 +7,8 @@ import functions
 import styles
 from routes import Route, route_manager
 
+from .stock_info import stock_dialog
+
 stock_table: ui.table
 
 
@@ -43,12 +45,12 @@ async def page():
         ):
             ui.button(
                 "Adicionar Produto",
-                on_click=components.stock_dialog(stock_table).run,
+                on_click=stock_dialog(stock_table).run,
             )
             with ui.row():
                 edit_btn = ui.button(
                     text="Editar",
-                    on_click=components.stock_dialog(stock_table, stock_table.id).run,
+                    on_click=stock_dialog(stock_table, stock_table.id).run,
                 )
                 remove_btn = ui.button(text="Remover", on_click=delete_stock_item)
 
