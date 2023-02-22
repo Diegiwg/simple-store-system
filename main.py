@@ -15,4 +15,4 @@ async def render(client: Client):
 
 
 app.add_static_files("/static", "static")
-ui.run(binding_refresh_interval=0.5)
+ui.run(binding_refresh_interval=0.5, title="System")

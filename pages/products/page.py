@@ -24,8 +24,6 @@ async def page():
     global table_instance
 
     with route_manager.root_element:
-
-        globals.title = route_manager.current_route.title
         components.page_title(route_manager.current_route.title)
 
         table_instance = ui.table(

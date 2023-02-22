@@ -10,7 +10,7 @@ function __python__UpdateClockData() {
 
     const [date, time] = (new Date()).toLocaleString().split(' ')
 
-    clock_node.querySelector('.__python__clock-date').textContent = date
+    clock_node.querySelector('.__python__clock-date').textContent = date.replace(',', '')
     clock_node.querySelector('.__python__clock-time').textContent = time
 }
 
@@ -22,7 +22,6 @@ async def clock():
     with ui.card().classes(add="__python__clock-node").style(
         add="display: grid; justify-items: center; gap: 0;"
     ) as clock_node:
-
         (
             Typography(ui.label(""))
             .font_family("font-mono")
